@@ -32,7 +32,7 @@ const BookAppointment = () => {
   const createBooking = useCreateBooking();
   const addPoints = useAddLoyaltyPoints();
 
-  const handleConfirm = async (pointsUsed: number, paymentMethod: string) => {
+  const handleConfirm = async (pointsUsed: number) => {
     if (!user || !selectedService || !selectedBarber || !selectedDate || !selectedSlot) return;
 
     try {
@@ -44,7 +44,7 @@ const BookAppointment = () => {
         start_time: selectedSlot.start,
         end_time: selectedSlot.end,
         created_by: user.id,
-        payment_method: paymentMethod as "cash" | "card" | "online",
+        payment_method: "cash",
       });
 
       // Award loyalty points for the booking
@@ -165,7 +165,7 @@ const BookAppointment = () => {
                   barber={selectedBarber}
                   date={selectedDate}
                   slot={selectedSlot}
-                  onConfirm={handleConfirm}
+                  onConfirm={(pointsUsed) => handleConfirm(pointsUsed)}
                   onBack={() => setStep(2)}
                   isSubmitting={createBooking.isPending}
                 />

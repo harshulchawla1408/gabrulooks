@@ -29,11 +29,11 @@ export const useCreateBooking = () => {
       end_time: string;
       created_by: string;
       notes?: string;
-      payment_method?: "cash" | "card" | "online";
+      payment_method?: "cash";
     }) => {
       const { data, error } = await supabase
         .from("bookings")
-        .insert(booking)
+        .insert({ ...booking, payment_method: "cash" })
         .select()
         .single();
       if (error) throw error;

@@ -36,7 +36,8 @@ const Checkout = () => {
   const [postcode, setPostcode] = useState("");
 
   // Payment
-  const [paymentMethod, setPaymentMethod] = useState<"cod" | "stripe">("cod");
+  // Only 'cash' payment method remains
+  const paymentMethod = "cash";
 
   // Phone check on mount
   useEffect(() => {
@@ -75,7 +76,7 @@ const Checkout = () => {
         shipping_city: city.trim(),
         shipping_state: state,
         shipping_postcode: postcode.trim(),
-        payment_method: paymentMethod,
+        payment_method: "cash",
       });
       clearCart();
       setOrderNumber(order.order_number);
@@ -95,7 +96,7 @@ const Checkout = () => {
             <h2 className="font-heading text-3xl text-foreground mb-2">Order Placed!</h2>
             <p className="text-muted-foreground mb-2">Your order <span className="font-bold text-primary">{orderNumber}</span> has been received.</p>
             <p className="text-muted-foreground text-sm mb-8">
-              {paymentMethod === "cod" ? "You chose Cash on Delivery. Pay when your order arrives." : "Payment will be processed via Stripe."}
+              Payment: Pay at Salon
             </p>
             <div className="flex gap-3 justify-center">
               <Button variant="outline" onClick={() => navigate("/dashboard")} className="border-primary/30">View Orders</Button>
@@ -194,29 +195,16 @@ const Checkout = () => {
                 <div className="space-y-5">
                   <div className="bg-card border border-border rounded-xl p-6">
                     <h3 className="font-heading text-xl text-foreground mb-4 flex items-center gap-2">
-                      <CreditCard className="w-5 h-5 text-primary" /> Payment Method
+                      <CreditCard className="w-5 h-5 text-primary" /> Payment
                     </h3>
                     <div className="space-y-3">
-                      <button
-                        onClick={() => setPaymentMethod("cod")}
-                        className={`w-full flex items-center gap-4 p-4 rounded-lg border transition-all ${paymentMethod === "cod" ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"}`}
-                      >
+                      <div className="w-full flex items-center gap-4 p-4 rounded-lg border border-primary bg-primary/5">
                         <Banknote className="w-6 h-6 text-primary" />
                         <div className="text-left">
-                          <p className="font-medium text-foreground">Cash on Delivery</p>
-                          <p className="text-xs text-muted-foreground">Pay with cash when your order arrives</p>
+                          <p className="font-medium text-foreground">Pay at Salon</p>
+                          <p className="text-xs text-muted-foreground">Payment will be made in person at the salon</p>
                         </div>
-                      </button>
-                      <button
-                        onClick={() => setPaymentMethod("stripe")}
-                        className={`w-full flex items-center gap-4 p-4 rounded-lg border transition-all ${paymentMethod === "stripe" ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"}`}
-                      >
-                        <CreditCard className="w-6 h-6 text-primary" />
-                        <div className="text-left">
-                          <p className="font-medium text-foreground">Pay with Card (Stripe)</p>
-                          <p className="text-xs text-muted-foreground">Secure payment via Stripe (AUD)</p>
-                        </div>
-                      </button>
+                      </div>
                     </div>
                   </div>
                   <div className="flex justify-between">
@@ -252,7 +240,7 @@ const Checkout = () => {
                     <div className="border-t border-border pt-3">
                       <p className="text-xs text-muted-foreground">Payment:</p>
                       <p className="text-sm text-foreground flex items-center gap-1">
-                        {paymentMethod === "cod" ? <><Banknote className="w-4 h-4 text-primary" /> Cash on Delivery</> : <><CreditCard className="w-4 h-4 text-primary" /> Stripe (Card)</>}
+                        <Banknote className="w-4 h-4 text-primary" /> Pay at Salon
                       </p>
                     </div>
                   </div>

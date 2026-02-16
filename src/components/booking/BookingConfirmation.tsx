@@ -34,7 +34,8 @@ const BookingConfirmation = ({ service, barber, date, slot, onConfirm, onBack, i
   const { balance } = useLoyaltyBalance(user?.id);
   const { data: profile, refetch: refetchProfile } = useMyProfile(user?.id);
   const [pointsToUse, setPointsToUse] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState<"pay_at_salon" | "stripe">("pay_at_salon");
+  // Only 'pay_at_salon' (cash) payment method remains
+  const paymentMethod = "pay_at_salon";
   const [showPhonePrompt, setShowPhonePrompt] = useState(false);
   const [phoneChecked, setPhoneChecked] = useState(false);
 
@@ -129,29 +130,14 @@ const BookingConfirmation = ({ service, barber, date, slot, onConfirm, onBack, i
         {/* Payment Method Selection */}
         <div className="border-t border-border pt-4 mt-2">
           <h4 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
-            <CreditCard className="w-4 h-4 text-primary" /> Payment Method
+            <CreditCard className="w-4 h-4 text-primary" /> Payment
           </h4>
-          <div className="space-y-2">
-            <button
-              onClick={() => setPaymentMethod("pay_at_salon")}
-              className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-all text-left ${paymentMethod === "pay_at_salon" ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"}`}
-            >
-              <Banknote className="w-5 h-5 text-primary flex-shrink-0" />
-              <div>
-                <p className="font-medium text-foreground text-sm">Pay at Salon</p>
-                <p className="text-xs text-muted-foreground">Pay cash or card when you visit</p>
-              </div>
-            </button>
-            <button
-              onClick={() => setPaymentMethod("stripe")}
-              className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-all text-left ${paymentMethod === "stripe" ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"}`}
-            >
-              <CreditCard className="w-5 h-5 text-primary flex-shrink-0" />
-              <div>
-                <p className="font-medium text-foreground text-sm">Pay Online (Stripe)</p>
-                <p className="text-xs text-muted-foreground">Secure card payment in AUD</p>
-              </div>
-            </button>
+          <div className="w-full flex items-center gap-3 p-3 rounded-lg border border-primary bg-primary/5">
+            <Banknote className="w-5 h-5 text-primary flex-shrink-0" />
+            <div>
+              <p className="font-medium text-foreground text-sm">Pay at Salon</p>
+              <p className="text-xs text-muted-foreground">Payment will be made in person at the salon</p>
+            </div>
           </div>
         </div>
 
@@ -195,7 +181,7 @@ const BookingConfirmation = ({ service, barber, date, slot, onConfirm, onBack, i
           Go Back
         </Button>
         <Button
-          onClick={() => onConfirm(pointsToUse, paymentMethod)}
+          onClick={() => onConfirm(pointsToUse, "cash")}
           disabled={isSubmitting}
           className="flex-1 gold-gradient text-background font-semibold"
         >

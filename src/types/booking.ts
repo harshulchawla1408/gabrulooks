@@ -48,7 +48,7 @@ export interface DbBooking {
   end_time: string;
   status: "confirmed" | "completed" | "cancelled" | "no_show";
   payment_status: "pending" | "paid" | "refunded";
-  payment_method: "cash" | "card" | "online" | null;
+  payment_method: "cash";
   notes: string | null;
   created_by: string;
   created_at: string;

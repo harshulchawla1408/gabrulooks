@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/contexts/AuthContext";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import logo from "@/assets/gabru-logo.png";
@@ -45,36 +44,62 @@ const Login = () => {
   const selectedCountry = COUNTRY_CODES.find(c => c.code === countryCode)!;
 
   const handleGoogleSignIn = async () => {
-    setLoading(true);
-    try {
-      const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin + "/dashboard",
+  setLoading(true);
+  try {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + "/dashboard",
+      },
+    });
+
+    if (error) {
+      toast({
+        title: "Sign in failed",
+        description: error.message,
+        variant: "destructive",
       });
-      if (result.error) {
-        toast({ title: "Sign in failed", description: result.error.message, variant: "destructive" });
-      }
-    } catch {
-      toast({ title: "Sign in failed", description: "Something went wrong", variant: "destructive" });
-    } finally {
-      setLoading(false);
     }
-  };
+  } catch {
+    toast({
+      title: "Sign in failed",
+      description: "Something went wrong",
+      variant: "destructive",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleAppleSignIn = async () => {
-    setLoading(true);
-    try {
-      const result = await lovable.auth.signInWithOAuth("apple", {
-        redirect_uri: window.location.origin + "/dashboard",
+  setLoading(true);
+  try {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "apple",
+      options: {
+        redirectTo: window.location.origin + "/dashboard",
+      },
+    });
+
+    if (error) {
+      toast({
+        title: "Sign in failed",
+        description: error.message,
+        variant: "destructive",
       });
-      if (result.error) {
-        toast({ title: "Sign in failed", description: result.error.message, variant: "destructive" });
-      }
-    } catch {
-      toast({ title: "Sign in failed", description: "Something went wrong", variant: "destructive" });
-    } finally {
-      setLoading(false);
     }
-  };
+  } catch {
+    toast({
+      title: "Sign in failed",
+      description: "Something went wrong",
+      variant: "destructive",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleSendOtp = async () => {
     if (!phoneNumber || phoneNumber.replace(/\s/g, "").length < 8) {

@@ -11,21 +11,20 @@ const ManageServices = () => {
   const updateService = useUpdateService();
   const [showAdd, setShowAdd] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", category: "men" as "men" | "women", cash_price: "", card_price: "" });
+  const [form, setForm] = useState({ name: "", category: "men" as "men" | "women", cash_price: "" });
 
   const handleAdd = async () => {
-    if (!form.name || !form.cash_price || !form.card_price) return;
+    if (!form.name || !form.cash_price) return;
     try {
       await createService.mutateAsync({
         name: form.name,
         category: form.category,
         cash_price: Math.round(parseFloat(form.cash_price) * 100),
-        card_price: Math.round(parseFloat(form.card_price) * 100),
         duration_minutes: 60,
         is_active: true,
       });
       toast({ title: "Service added" });
-      setForm({ name: "", category: "men", cash_price: "", card_price: "" });
+      setForm({ name: "", category: "men", cash_price: "" });
       setShowAdd(false);
     } catch (e: any) {
       toast({ title: "Error", description: e.message, variant: "destructive" });
@@ -67,7 +66,6 @@ const ManageServices = () => {
               <option value="women">Women</option>
             </select>
             <Input placeholder="Cash $" type="number" value={form.cash_price} onChange={e => setForm({ ...form, cash_price: e.target.value })} />
-            <Input placeholder="Card $" type="number" value={form.card_price} onChange={e => setForm({ ...form, card_price: e.target.value })} />
           </div>
           <div className="flex gap-2">
             <Button size="sm" onClick={handleAdd} disabled={createService.isPending}>
@@ -99,7 +97,7 @@ const ManageServices = () => {
                   <div>
                     <span className="text-sm font-medium text-foreground">{s.name}</span>
                     <span className="text-xs text-muted-foreground ml-3">
-                      Cash: {formatPrice(s.cash_price)} | Card: {formatPrice(s.card_price)}
+                      Cash: {formatPrice(s.cash_price)}
                     </span>
                   </div>
                   <Button
