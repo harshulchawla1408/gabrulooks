@@ -19,14 +19,16 @@ const LoyaltyPoints = () => {
   ];
 
   return (
-    <div className="py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <div className="py-16 md:py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--p)/0.05),transparent_70%)] opacity-50 z-0" />
+      <div className="container mx-auto px-4 max-w-4xl relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="text-center mb-10">
-            <h1 className="font-heading text-4xl text-foreground mb-3">
-              <span className="gold-text-gradient">Loyalty Rewards</span>
+          <div className="text-center mb-12">
+            <p className="text-primary tracking-[0.2em] text-xs uppercase font-bold mb-2">Rewards</p>
+            <h1 className="font-heading text-4xl md:text-5xl text-base-content font-bold mb-4">
+              Loyalty Program
             </h1>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <p className="text-base-content/70 max-w-xl mx-auto text-lg">
               Every visit earns you points. Redeem them for discounts on services and products.
             </p>
           </div>
@@ -34,22 +36,33 @@ const LoyaltyPoints = () => {
           {/* Balance Card */}
           {user && (
             <ScrollReveal>
-              <div className="gold-gradient rounded-2xl p-6 mb-10 text-center text-background">
-                <p className="text-sm font-semibold uppercase tracking-wider opacity-80">Your Balance</p>
-                <p className="text-5xl font-heading font-bold my-2">{balance}</p>
-                <p className="text-sm opacity-80">loyalty points</p>
-                <div className="flex justify-center gap-8 mt-4 text-xs">
-                  <div>
-                    <p className="font-bold text-lg">{totalEarned}</p>
-                    <p className="opacity-70">Total Earned</p>
+              <div className="card bg-gradient-to-br from-primary to-primary/80 shadow-2xl p-8 md:p-12 mb-16 text-center text-primary-content relative overflow-hidden border border-primary/20">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
+                
+                <div className="relative z-10">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 mb-6 backdrop-blur-sm shadow-inner group">
+                    <Gift className="w-8 h-8 text-white group-hover:scale-110 transition-transform" />
                   </div>
-                  <div>
-                    <p className="font-bold text-lg">{totalUsed}</p>
-                    <p className="opacity-70">Total Used</p>
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">{thisMonth}</p>
-                    <p className="opacity-70">This Month</p>
+                  <p className="text-sm font-bold uppercase tracking-widest opacity-90 mb-2">Your Balance</p>
+                  <p className="text-6xl md:text-7xl font-heading font-bold mb-1 drop-shadow-md">{balance}</p>
+                  <p className="text-sm opacity-90 font-medium mb-8">loyalty points available</p>
+                  
+                  <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-12 mt-4 text-sm bg-black/10 p-5 rounded-2xl backdrop-blur-sm mx-auto max-w-xl border border-white/10">
+                    <div className="flex-1">
+                      <p className="font-bold text-2xl mb-1">{totalEarned}</p>
+                      <p className="opacity-80 text-xs uppercase tracking-wider font-semibold">Total Earned</p>
+                    </div>
+                    <div className="hidden sm:block w-px bg-white/20" />
+                    <div className="flex-1">
+                      <p className="font-bold text-2xl mb-1">{totalUsed}</p>
+                      <p className="opacity-80 text-xs uppercase tracking-wider font-semibold">Total Used</p>
+                    </div>
+                    <div className="hidden sm:block w-px bg-white/20" />
+                    <div className="flex-1">
+                      <p className="font-bold text-2xl mb-1">{thisMonth}</p>
+                      <p className="opacity-80 text-xs uppercase tracking-wider font-semibold">This Month</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -57,27 +70,29 @@ const LoyaltyPoints = () => {
           )}
 
           {/* Rules */}
-          <div className="grid gap-4 sm:grid-cols-2 mb-10">
-            {rules.map((r, i) => (
-              <ScrollReveal key={i} delay={i * 0.1}>
-                <div className="border border-border bg-card rounded-xl p-5 flex gap-4 items-start hover-gold-glow transition-all duration-300">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <r.icon className="w-5 h-5 text-primary" />
+          <div className="mb-16">
+            <h2 className="font-heading text-3xl text-center text-base-content mb-8">How It Works</h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {rules.map((r, i) => (
+                <ScrollReveal key={i} delay={i * 0.1}>
+                  <div className="card bg-base-100/80 backdrop-blur-xl shadow-lg border border-primary/10 p-6 h-full flex flex-col hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary shrink-0">
+                      <r.icon className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-heading text-xl text-base-content font-bold mb-2">{r.title}</h3>
+                    <p className="text-sm text-base-content/70 flex-grow leading-relaxed">{r.desc}</p>
                   </div>
-                  <div>
-                    <h3 className="font-heading text-lg text-foreground">{r.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{r.desc}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
 
           {/* CTA */}
-          <div className="text-center">
+          <div className="text-center pb-8">
             <Link to={user ? "/book" : "/login"}>
-              <Button className="gold-gradient text-background font-semibold px-8">
-                {user ? "Book & Earn Points" : "Sign In to Start Earning"} <ArrowRight className="w-4 h-4 ml-2" />
+              <Button className="btn btn-primary btn-lg rounded-full px-10 shadow-lg hover:shadow-xl border-none hover:-translate-y-1 transition-all text-lg group">
+                {user ? "Book & Earn Points" : "Sign In to Start Earning"} 
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </div>

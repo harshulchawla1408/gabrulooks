@@ -30,18 +30,17 @@ const values = [
 const About = () => {
   return (
     <div className="overflow-hidden">
-      {/* Hero */}
       <motion.section variants={pageEnter} initial="hidden" animate="visible" className="py-28 md:py-36 relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--gold)/0.06),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--p)/0.1),transparent_70%)] opacity-50" />
         <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.div variants={fadeUp} className="w-16 h-px mx-auto mb-6 bg-primary/40" />
-          <motion.p variants={fadeUp} className="text-primary/70 text-xs uppercase tracking-[0.3em] mb-4 font-body font-medium">
+          <motion.div variants={fadeUp} className="w-20 h-1 mx-auto mb-8 bg-primary/40 rounded-full" />
+          <motion.p variants={fadeUp} className="text-secondary-content/80 text-sm uppercase tracking-[0.4em] mb-4 font-body font-medium">
             Our Story
           </motion.p>
-          <motion.h1 variants={fadeUp} className="font-heading text-4xl md:text-6xl text-foreground mb-6">
-            About <span className="gold-text-gradient">Gabru Looks</span>
+          <motion.h1 variants={fadeUp} className="font-heading text-5xl md:text-7xl text-base-content mb-6 font-bold tracking-tight">
+            About <span className="text-primary drop-shadow-md">Gabru Looks</span>
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <motion.p variants={fadeUp} className="text-base-content/70 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Born from a deep passion for precision grooming and the art of barbering, Gabru Looks delivers a premium salon experience to the heart of Werribee, Victoria.
           </motion.p>
         </div>
@@ -55,26 +54,29 @@ const About = () => {
       </div>
 
       {/* Story */}
-      <section className="py-28 bg-card/30">
+      <section className="py-28 bg-base-200/50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center max-w-6xl mx-auto">
             <ScrollReveal direction="left">
-              <div className="h-80 lg:h-96 rounded-2xl overflow-hidden">
-                <img src={salonInterior} alt="Gabru Looks Interior" className="w-full h-full object-cover" />
+              <div className="h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl relative group">
+                <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-700 z-10"></div>
+                <img src={salonInterior} alt="Gabru Looks Interior" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
               </div>
             </ScrollReveal>
             <ScrollReveal direction="right" delay={150}>
-              <div>
-                <h2 className="font-heading text-3xl text-foreground mb-5">Our Philosophy</h2>
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  At Gabru Looks, grooming isn't just a haircut — it's a complete experience. From the moment you step through our doors, you're treated to a premium atmosphere crafted to make you feel confident and refreshed.
-                </p>
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  Our team of expert barbers and stylists bring years of experience and genuine artistry to every service. Whether you're after a classic gentleman's cut, a sharp modern fade, or expert beard sculpting, we deliver precision with every stroke.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  We proudly serve men, women, and children — offering everything from threading and tinting to advanced treatments like keratin smoothing and nanoplastia restoration.
-                </p>
+              <div className="space-y-6">
+                <h2 className="font-heading text-4xl text-base-content mb-6">Our Philosophy</h2>
+                <div className="prose prose-lg text-base-content/70">
+                  <p className="leading-relaxed">
+                    At Gabru Looks, grooming isn't just a haircut — it's a complete experience. From the moment you step through our doors, you're treated to a premium atmosphere crafted to make you feel confident and refreshed.
+                  </p>
+                  <p className="leading-relaxed">
+                    Our team of expert barbers and stylists bring years of experience and genuine artistry to every service. Whether you're after a classic gentleman's cut, a sharp modern fade, or expert beard sculpting, we deliver precision with every stroke.
+                  </p>
+                  <p className="leading-relaxed">
+                    We proudly serve men, women, and children — offering everything from threading and tinting to advanced treatments like keratin smoothing and nanoplastia restoration.
+                  </p>
+                </div>
               </div>
             </ScrollReveal>
           </div>
@@ -93,12 +95,14 @@ const About = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {values.map((v, i) => (
               <ScrollReveal key={v.title} delay={i * 80}>
-                <div className="premium-card p-7 text-center group">
-                  <div className="w-14 h-14 mx-auto mb-5 rounded-full bg-accent flex items-center justify-center group-hover:bg-primary/10 transition-colors duration-500">
-                    <v.icon className="w-6 h-6 text-primary" />
+                <div className="card bg-base-100 shadow-lg hover:shadow-[0_20px_50px_rgba(212,175,55,0.15)] transition-all duration-500 hover:-translate-y-2 border border-primary/10 group h-full">
+                  <div className="card-body items-center text-center p-8">
+                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-500">
+                      <v.icon className="w-8 h-8 text-primary group-hover:text-primary-content transition-colors duration-500" />
+                    </div>
+                    <h3 className="card-title font-heading text-xl text-base-content mb-3">{v.title}</h3>
+                    <p className="text-base-content/70 text-base">{v.desc}</p>
                   </div>
-                  <h3 className="font-heading text-lg text-foreground mb-2">{v.title}</h3>
-                  <p className="text-muted-foreground text-sm">{v.desc}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -107,24 +111,26 @@ const About = () => {
       </section>
 
       {/* Timeline */}
-      <section className="py-28 bg-card/30">
+      <section className="py-28 bg-base-200/50">
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-20">
-              <p className="text-primary/70 text-xs uppercase tracking-[0.3em] mb-4 font-body font-medium">Our Journey</p>
-              <h2 className="font-heading text-3xl md:text-5xl text-foreground">The Gabru Story</h2>
+              <p className="text-primary/80 text-sm uppercase tracking-[0.4em] mb-4 font-body font-medium">Our Journey</p>
+              <h2 className="font-heading text-4xl md:text-5xl text-base-content">The Gabru Story</h2>
             </div>
           </ScrollReveal>
-          <div className="max-w-2xl mx-auto relative">
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-primary/15 md:-translate-x-px" />
+          <div className="max-w-4xl mx-auto relative">
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-primary/20 md:-translate-x-1/2 rounded-full" />
             {milestones.map((m, i) => (
               <ScrollReveal key={i} delay={i * 150}>
-                <div className={`relative flex items-center gap-6 mb-14 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
-                  <div className="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-primary -translate-x-1.5 md:-translate-x-1.5" />
-                  <div className="ml-12 md:ml-0 md:w-1/2 premium-card p-6">
-                    <span className="text-primary text-xs font-bold tracking-wider">{m.year}</span>
-                    <h3 className="font-heading text-lg text-foreground mt-1">{m.title}</h3>
-                    <p className="text-muted-foreground text-sm mt-1">{m.desc}</p>
+                <div className={`relative flex items-center gap-8 mb-16 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
+                  <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-base-100 shadow-md md:-translate-x-1/2 -ml-1.5 md:ml-0 z-10" />
+                  <div className={`ml-16 md:ml-0 md:w-1/2 ${i % 2 === 0 ? "md:pr-16" : "md:pl-16"}`}>
+                    <div className="card bg-base-100 shadow-xl border border-primary/10 p-8 hover:-translate-y-1 transition-transform duration-300">
+                      <span className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold tracking-wider mb-4">{m.year}</span>
+                      <h3 className="font-heading text-2xl text-base-content mb-3">{m.title}</h3>
+                      <p className="text-base-content/70 text-base leading-relaxed">{m.desc}</p>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
@@ -142,11 +148,12 @@ const About = () => {
               <h2 className="font-heading text-3xl md:text-5xl text-foreground">The Salon</h2>
             </div>
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[salonInterior, barberCutting, beardTrim].map((img, n) => (
               <ScrollReveal key={n} delay={n * 100}>
-                <div className="h-64 rounded-2xl overflow-hidden group">
-                  <img src={img} alt={`Salon view ${n + 1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="h-80 rounded-3xl overflow-hidden group shadow-lg">
+                  <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                  <img src={img} alt={`Salon view ${n + 1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 </div>
               </ScrollReveal>
             ))}

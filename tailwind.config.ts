@@ -144,5 +144,50 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require('daisyui')],
+  daisyui: {
+    themes: [
+      {
+        gabru: {
+          "primary": "hsl(40 74% 47%)",
+          "primary-focus": "hsl(40 65% 35%)",
+          "primary-content": "hsl(40 33% 96%)",
+          
+          "secondary": "hsl(0 0% 12%)",
+          "secondary-focus": "hsl(0 0% 18%)",
+          "secondary-content": "hsl(40 33% 96%)",
+          
+          "accent": "hsl(40 60% 94%)",
+          "accent-focus": "hsl(40 74% 47%)",
+          "accent-content": "hsl(40 74% 40%)",
+          
+          "neutral": "hsl(0 0% 12%)",
+          "neutral-focus": "hsl(0 0% 18%)",
+          "neutral-content": "hsl(40 33% 96%)",
+          
+          "base-100": "hsl(40 33% 96%)",
+          "base-200": "hsl(40 30% 98%)",
+          "base-300": "hsl(35 20% 87%)",
+          "base-content": "hsl(0 0% 12%)",
+
+          "info": "hsl(200 80% 50%)",
+          "success": "hsl(140 80% 40%)",
+          "warning": "hsl(40 80% 50%)",
+          "error": "hsl(0 72% 50%)",
+          
+          "--rounded-box": "1rem",
+          "--rounded-btn": "0.5rem",
+          "--rounded-badge": "1.9rem",
+        },
+      },
+      "dark",
+    ],
+    darkTheme: "dark",
+    base: true,
+    styled: true,
+    utils: true,
+    prefix: "",
+    logs: true,
+    themeRoot: ":root",
+  },
 } satisfies Config;

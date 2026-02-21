@@ -30,7 +30,7 @@ const Navbar = () => {
 
   const isHome = location.pathname === "/";
   const navBg = scrolled || !isHome
-    ? "bg-background/95 backdrop-blur-xl border-b border-border shadow-sm"
+    ? "bg-base-100/80 backdrop-blur-2xl border-b border-primary/10 shadow-sm"
     : "bg-transparent border-b border-transparent";
 
   return (
@@ -65,29 +65,29 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center gap-3">
           <Link to="/book">
-            <Button size="sm" className="gold-gradient text-background font-semibold hover:scale-105 transition-transform shadow-md">
+            <Button size="sm" className="btn btn-primary btn-sm rounded-full text-primary-content hover:scale-105 transition-transform shadow-md border-none">
               Book Now
             </Button>
           </Link>
           <a href="tel:+61460309333">
-            <Button variant="outline" size="sm" className="border-primary/30 text-primary hover:bg-primary/10">
+            <Button variant="outline" size="sm" className="btn btn-outline btn-primary btn-sm rounded-full">
               <Phone className="w-4 h-4 mr-1" /> Call
             </Button>
           </a>
           {user ? (
             <div className="flex items-center gap-2">
               <Link to="/dashboard">
-                <Button size="sm" variant="outline" className="border-primary/30 text-primary hover:bg-primary/10">
+                <Button size="sm" variant="outline" className="btn btn-outline btn-primary btn-sm rounded-full">
                   <User className="w-4 h-4 mr-1" /> Dashboard
                 </Button>
               </Link>
-              <Button size="sm" variant="ghost" onClick={signOut} className="text-muted-foreground hover:text-foreground">
+              <Button size="sm" variant="ghost" onClick={signOut} className="btn btn-ghost btn-sm btn-circle text-base-content/60 hover:text-error">
                 <LogOut className="w-4 h-4" />
               </Button>
             </div>
           ) : (
             <Link to="/login">
-              <Button size="sm" variant="outline" className="border-primary/30 text-primary hover:bg-primary/10">
+              <Button size="sm" variant="outline" className="btn btn-outline btn-primary btn-sm rounded-full">
                 Sign In
               </Button>
             </Link>
@@ -95,7 +95,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <button className="lg:hidden text-foreground" onClick={() => setOpen(!open)}>
+        <button className="lg:hidden btn btn-ghost btn-circle" onClick={() => setOpen(!open)}>
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
@@ -107,7 +107,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-background/98 backdrop-blur-xl border-b border-border overflow-hidden"
+            className="lg:hidden bg-base-100/95 backdrop-blur-2xl border-b border-primary/10 overflow-hidden"
           >
             <nav className="flex flex-col gap-1 p-4">
               {navLinks.map((link) => (
@@ -117,8 +117,8 @@ const Navbar = () => {
                   onClick={() => setOpen(false)}
                   className={`py-3 px-4 rounded-xl text-sm font-medium tracking-wide uppercase transition-all ${
                     location.pathname === link.to
-                      ? "text-primary bg-accent"
-                      : "text-muted-foreground hover:text-primary hover:bg-accent/50"
+                      ? "text-primary bg-primary/10"
+                      : "text-base-content/60 hover:text-primary hover:bg-primary/5"
                   }`}
                 >
                   {link.label}
@@ -126,22 +126,22 @@ const Navbar = () => {
               ))}
               <div className="flex gap-2 mt-4">
                 <a href="tel:+61460309333" className="flex-1">
-                  <Button variant="outline" className="w-full border-primary/30 text-primary">
+                  <Button variant="outline" className="btn btn-outline btn-primary w-full rounded-full">
                     <Phone className="w-4 h-4 mr-1" /> Call
                   </Button>
                 </a>
                 {user ? (
                   <Link to="/dashboard" className="flex-1" onClick={() => setOpen(false)}>
-                    <Button className="w-full gold-gradient text-background font-semibold">Dashboard</Button>
+                    <Button className="btn btn-primary w-full rounded-full border-none">Dashboard</Button>
                   </Link>
                 ) : (
                   <Link to="/login" className="flex-1" onClick={() => setOpen(false)}>
-                    <Button className="w-full gold-gradient text-background font-semibold">Sign In</Button>
+                    <Button className="btn btn-primary w-full rounded-full border-none">Sign In</Button>
                   </Link>
                 )}
               </div>
               {user && (
-                <Button variant="ghost" onClick={() => { signOut(); setOpen(false); }} className="mt-2 text-muted-foreground">
+                <Button variant="ghost" onClick={() => { signOut(); setOpen(false); }} className="btn btn-ghost mt-2 text-error w-full">
                   <LogOut className="w-4 h-4 mr-1" /> Sign Out
                 </Button>
               )}

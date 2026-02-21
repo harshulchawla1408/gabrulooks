@@ -88,136 +88,182 @@ const BarberDashboard = () => {
   const pastBookings = bookings?.filter(b => b.status !== "confirmed") ?? [];
 
   return (
-    <div className="py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <div className="py-16 md:py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--p)/0.05),transparent_70%)] opacity-50 z-0" />
+      <div className="container mx-auto px-4 max-w-5xl relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4 bg-base-100/80 backdrop-blur-xl p-6 rounded-2xl border border-primary/10 shadow-sm">
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <h1 className="font-heading text-3xl text-foreground">Barber Dashboard</h1>
-                <span className="text-xs gold-gradient text-background px-2 py-0.5 rounded-full font-semibold">BARBER</span>
+              <div className="flex items-center gap-3 mb-1">
+                <p className="text-primary tracking-[0.2em] text-xs uppercase font-bold">Workspace</p>
+                <div className="badge badge-primary badge-sm uppercase font-bold tracking-wider">Barber</div>
               </div>
-              <p className="text-muted-foreground text-sm">Welcome, {barber.display_name}</p>
+              <h1 className="font-heading text-4xl text-base-content font-bold">Barber Dashboard</h1>
+              <p className="text-base-content/60 text-sm mt-1">Welcome back, {barber.display_name}</p>
             </div>
-            <Button variant="outline" onClick={signOut} className="border-primary/30 text-primary hover:bg-primary/10">Sign Out</Button>
+            <Button variant="outline" onClick={signOut} className="btn btn-outline btn-error rounded-full hover:bg-error hover:text-error-content hover:border-error transition-all px-6">
+              Sign Out
+            </Button>
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-2 mb-6 flex-wrap">
-            <Button
-              variant={tab === "bookings" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setTab("bookings")}
-              className={tab === "bookings" ? "gold-gradient text-background" : "border-primary/30"}
-            >
-              <Calendar className="w-4 h-4 mr-1" /> My Bookings
-            </Button>
-            <Button
-              variant={tab === "availability" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setTab("availability")}
-              className={tab === "availability" ? "gold-gradient text-background" : "border-primary/30"}
-            >
-              <Clock className="w-4 h-4 mr-1" /> Availability
-            </Button>
-            <Button
-              variant={tab === "earnings" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setTab("earnings")}
-              className={tab === "earnings" ? "gold-gradient text-background" : "border-primary/30"}
-            >
-              <BarChart3 className="w-4 h-4 mr-1" /> Earnings
-            </Button>
-            <Button
-              variant={tab === "profile" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setTab("profile")}
-              className={tab === "profile" ? "gold-gradient text-background" : "border-primary/30"}
-            >
-              <User className="w-4 h-4 mr-1" /> Profile
-            </Button>
+          <div className="flex overflow-x-auto pb-4 mb-8 hide-scrollbar scroll-smooth">
+            <div className="flex gap-3 px-1">
+              <button
+                onClick={() => setTab("bookings")}
+                className={`btn rounded-full px-6 transition-all border-none ${
+                  tab === "bookings" ? "btn-primary shadow-md shadow-primary/20 hover:-translate-y-0.5" : "bg-base-200/50 hover:bg-base-200 text-base-content/70 hover:text-base-content"
+                }`}
+              >
+                <Calendar className={`w-4 h-4 mr-2 ${tab === "bookings" ? "text-primary-content" : "text-primary"}`} /> <span className="whitespace-nowrap">My Bookings</span>
+              </button>
+              <button
+                onClick={() => setTab("availability")}
+                className={`btn rounded-full px-6 transition-all border-none ${
+                  tab === "availability" ? "btn-primary shadow-md shadow-primary/20 hover:-translate-y-0.5" : "bg-base-200/50 hover:bg-base-200 text-base-content/70 hover:text-base-content"
+                }`}
+              >
+                <Clock className={`w-4 h-4 mr-2 ${tab === "availability" ? "text-primary-content" : "text-primary"}`} /> <span className="whitespace-nowrap">Availability</span>
+              </button>
+              <button
+                onClick={() => setTab("earnings")}
+                className={`btn rounded-full px-6 transition-all border-none ${
+                  tab === "earnings" ? "btn-primary shadow-md shadow-primary/20 hover:-translate-y-0.5" : "bg-base-200/50 hover:bg-base-200 text-base-content/70 hover:text-base-content"
+                }`}
+              >
+                <BarChart3 className={`w-4 h-4 mr-2 ${tab === "earnings" ? "text-primary-content" : "text-primary"}`} /> <span className="whitespace-nowrap">Earnings</span>
+              </button>
+              <button
+                onClick={() => setTab("profile")}
+                className={`btn rounded-full px-6 transition-all border-none ${
+                  tab === "profile" ? "btn-primary shadow-md shadow-primary/20 hover:-translate-y-0.5" : "bg-base-200/50 hover:bg-base-200 text-base-content/70 hover:text-base-content"
+                }`}
+              >
+                <User className={`w-4 h-4 mr-2 ${tab === "profile" ? "text-primary-content" : "text-primary"}`} /> <span className="whitespace-nowrap">Profile</span>
+              </button>
+            </div>
           </div>
 
           {tab === "bookings" && (
-            <div className="space-y-4">
-              <h3 className="font-heading text-lg text-foreground">Upcoming ({upcomingBookings.length})</h3>
-              {!upcomingBookings.length ? (
-                <p className="text-muted-foreground text-sm py-4">No upcoming bookings</p>
-              ) : (
-                upcomingBookings.map(b => {
-                  const service = getService(b.service_id);
-                  return (
-                    <div key={b.id} className="p-4 rounded-xl border border-border bg-card flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-foreground text-sm">{service?.name}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {format(new Date(b.booking_date + "T00:00:00"), "MMM d, yyyy")} · {formatSlotTime(b.start_time)} – {formatSlotTime(b.end_time)}
-                        </p>
-                      </div>
-                      <Button size="sm" onClick={() => handleComplete(b.id)} className="text-xs h-7">
-                        <Check className="w-3 h-3 mr-1" /> Complete
-                      </Button>
+            <div className="space-y-8">
+              <div>
+                <h3 className="font-heading text-2xl text-base-content mb-4 flex items-center gap-2 border-b border-base-300 pb-2">
+                  <Calendar className="w-5 h-5 text-primary" /> Upcoming ({upcomingBookings.length})
+                </h3>
+                {!upcomingBookings.length ? (
+                  <div className="text-center py-12 bg-base-200/50 border border-base-300 rounded-2xl">
+                    <div className="w-16 h-16 bg-base-100 rounded-full flex items-center justify-center mx-auto mb-4 opacity-50">
+                      <Clock className="w-8 h-8 text-base-content/40" />
                     </div>
-                  );
-                })
-              )}
+                    <p className="text-base-content/60 text-lg">No upcoming bookings</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {upcomingBookings.map(b => {
+                      const service = getService(b.service_id);
+                      return (
+                        <div key={b.id} className="p-5 rounded-2xl border border-primary/10 bg-base-100/80 shadow-sm hover:shadow-md transition-shadow flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                          <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 text-primary font-bold">
+                              {format(new Date(b.booking_date + "T00:00:00"), "dd")}
+                            </div>
+                            <div className="space-y-1">
+                              <p className="font-bold text-base-content text-lg">{service?.name}</p>
+                              <p className="text-sm text-base-content/70 flex items-center gap-1.5 whitespace-nowrap">
+                                <Calendar className="w-3.5 h-3.5" /> {format(new Date(b.booking_date + "T00:00:00"), "MMM d, yyyy")} <span className="text-base-300 mx-1">|</span>
+                                <Clock className="w-3.5 h-3.5" /> {formatSlotTime(b.start_time)} – {formatSlotTime(b.end_time)}
+                              </p>
+                            </div>
+                          </div>
+                          <Button size="sm" onClick={() => handleComplete(b.id)} className="btn btn-primary btn-sm rounded-full px-6 w-full sm:w-auto">
+                            <Check className="w-4 h-4 mr-1" /> Complete
+                          </Button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
 
               {pastBookings.length > 0 && (
-                <>
-                  <h3 className="font-heading text-lg text-foreground mt-6">Past Bookings</h3>
-                  {pastBookings.slice(0, 10).map(b => {
-                    const service = getService(b.service_id);
-                    return (
-                      <div key={b.id} className="p-3 rounded-lg border border-border/50 bg-card/50 opacity-70">
-                        <p className="font-medium text-foreground text-sm">{service?.name} — <span className="text-xs capitalize">{b.status}</span></p>
-                        <p className="text-xs text-muted-foreground">
-                          {format(new Date(b.booking_date + "T00:00:00"), "MMM d")} · {formatSlotTime(b.start_time)}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </>
+                <div>
+                  <h3 className="font-heading text-2xl text-base-content mb-4 flex items-center gap-2 border-b border-base-300 pb-2">
+                    <Clock className="w-5 h-5 text-base-content/50" /> Past Bookings
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {pastBookings.slice(0, 10).map(b => {
+                      const service = getService(b.service_id);
+                      return (
+                        <div key={b.id} className="p-4 rounded-2xl border border-base-300 bg-base-200/50 opacity-80 hover:opacity-100 transition-opacity flex justify-between items-center">
+                          <div>
+                            <p className="font-semibold text-base-content">{service?.name}</p>
+                            <p className="text-xs text-base-content/60 mt-1 flex items-center gap-1">
+                              <Calendar className="w-3 h-3" /> {format(new Date(b.booking_date + "T00:00:00"), "MMM d")} · {formatSlotTime(b.start_time)}
+                            </p>
+                          </div>
+                          <span className={`badge badge-sm uppercase font-bold tracking-wider ${
+                            b.status === "completed" ? "badge-success badge-outline"
+                              : b.status === "cancelled" ? "badge-error badge-outline"
+                                : "badge-ghost"
+                          }`}>
+                            {b.status}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               )}
             </div>
           )}
 
           {tab === "availability" && (
-            <div className="space-y-3">
-              <p className="text-sm text-muted-foreground mb-4">Set your working hours for each day. Customers can only book during these times.</p>
-              {DAYS.map((day, i) => {
-                const dayData = schedule[i] ?? { start: "09:00", end: "17:00", active: false };
-                return (
-                  <div key={day} className="flex items-center gap-3 p-3 rounded-lg border border-border bg-card">
-                    <label className="flex items-center gap-2 min-w-[100px]">
-                      <input
-                        type="checkbox"
-                        checked={dayData.active}
-                        onChange={e => setSchedule({ ...schedule, [i]: { ...dayData, active: e.target.checked } })}
-                        className="accent-primary"
-                      />
-                      <span className="text-sm font-medium text-foreground">{day}</span>
-                    </label>
-                    <input
-                      type="time"
-                      value={dayData.start}
-                      onChange={e => setSchedule({ ...schedule, [i]: { ...dayData, start: e.target.value } })}
-                      disabled={!dayData.active}
-                      className="rounded-md border border-border bg-background px-2 py-1 text-xs disabled:opacity-40"
-                    />
-                    <span className="text-xs text-muted-foreground">to</span>
-                    <input
-                      type="time"
-                      value={dayData.end}
-                      onChange={e => setSchedule({ ...schedule, [i]: { ...dayData, end: e.target.value } })}
-                      disabled={!dayData.active}
-                      className="rounded-md border border-border bg-background px-2 py-1 text-xs disabled:opacity-40"
-                    />
-                    <Button size="sm" onClick={() => saveDay(i)} className="text-xs h-7 ml-auto" disabled={!schedule[i]}>
-                      Save
-                    </Button>
-                  </div>
-                );
-              })}
+            <div className="card bg-base-100/80 backdrop-blur-xl shadow-xl border border-primary/10 p-6 sm:p-8">
+              <div className="flex items-center gap-3 mb-6 border-b border-base-300 pb-4">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"><Clock className="w-5 h-5 text-primary" /></div>
+                <div>
+                  <h3 className="font-heading text-2xl text-base-content">Weekly Schedule</h3>
+                  <p className="text-sm text-base-content/60">Set your working hours for each day. Customers can only book during these times.</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                {DAYS.map((day, i) => {
+                  const dayData = schedule[i] ?? { start: "09:00", end: "17:00", active: false };
+                  return (
+                    <div key={day} className={`flex flex-col sm:flex-row sm:items-center gap-4 p-4 rounded-xl border transition-colors ${dayData.active ? 'border-primary/30 bg-primary/5' : 'border-base-300 bg-base-200/30'}`}>
+                      <label className="flex items-center gap-3 min-w-[140px] cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={dayData.active}
+                          onChange={e => setSchedule({ ...schedule, [i]: { ...dayData, active: e.target.checked } })}
+                          className="checkbox checkbox-primary checkbox-sm rounded-md"
+                        />
+                        <span className={`text-base font-medium ${dayData.active ? 'text-base-content' : 'text-base-content/60'}`}>{day}</span>
+                      </label>
+                      <div className="flex items-center gap-2 flex-grow">
+                        <input
+                          type="time"
+                          value={dayData.start}
+                          onChange={e => setSchedule({ ...schedule, [i]: { ...dayData, start: e.target.value } })}
+                          disabled={!dayData.active}
+                          className="input input-bordered input-sm w-full max-w-[120px] bg-base-100/50 disabled:opacity-50"
+                        />
+                        <span className="text-sm text-base-content/50 px-2 font-medium">to</span>
+                        <input
+                          type="time"
+                          value={dayData.end}
+                          onChange={e => setSchedule({ ...schedule, [i]: { ...dayData, end: e.target.value } })}
+                          disabled={!dayData.active}
+                          className="input input-bordered input-sm w-full max-w-[120px] bg-base-100/50 disabled:opacity-50"
+                        />
+                      </div>
+                      <Button size="sm" onClick={() => saveDay(i)} className="btn btn-primary btn-sm rounded-full px-6 sm:ml-auto w-full sm:w-auto" disabled={!schedule[i]}>
+                        Save Day
+                      </Button>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
 

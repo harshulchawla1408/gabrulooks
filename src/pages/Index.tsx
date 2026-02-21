@@ -14,7 +14,7 @@ import StatsCounter from "@/components/StatsCounter";
 import logo from "@/assets/gabru-logo.png";
 import qrCode from "@/assets/gabru-qr.png";
 import tiktokQr from "@/assets/gabru-tiktok-qr.png";
-import heroImage from "@/assets/hero-barbershop.jpg";
+import heroVideo from "@/assets/hero-video.mp4";
 import barberCutting from "@/assets/barber-cutting.jpg";
 import beardTrim from "@/assets/beard-trim.jpg";
 import salonInterior from "@/assets/salon-interior.jpg";
@@ -56,8 +56,16 @@ const Index = () => {
       {/* ─── Hero ─── */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden -mt-20">
         <motion.div style={{ scale: heroScale }} className="absolute inset-0 will-change-transform">
-          <img src={heroImage} alt="Gabru Looks Salon" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-secondary/50 via-secondary/30 to-background/80" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-base-300/60 via-base-300/40 to-base-100/90" />
         </motion.div>
 
         <motion.div style={{ opacity: heroOpacity, y: textY }} className="relative z-10 container mx-auto px-4 text-center pt-20">
@@ -67,27 +75,27 @@ const Index = () => {
 
           <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 0.3, ease: "easeInOut" }} className="w-20 h-px mx-auto mb-8 bg-primary/60 origin-center" />
 
-          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl text-secondary-foreground mb-4 leading-tight">
-            <HeroTitle text="Crafted Precision." />
+          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl text-primary-content mb-4 leading-tight drop-shadow-xl font-bold">
+            <HeroTitle text="Crafted Precision." className="tracking-tight" />
             <br />
-            <span className="gold-text-gradient">
-              <HeroTitle text="Styled Perfection." />
+            <span className="text-primary drop-shadow-lg">
+              <HeroTitle text="Styled Perfection." className="tracking-tight" />
             </span>
           </h1>
 
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.4 }} className="text-secondary-foreground/60 text-lg md:text-xl mb-12 max-w-lg mx-auto font-heading italic">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.4 }} className="text-primary-content/80 text-lg md:text-xl mb-12 max-w-lg mx-auto font-heading italic tracking-wide">
             Where Hair Meets The Artist
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.7, ease: "easeOut" }} className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/book">
-              <Button size="lg" className="gold-gradient text-background font-semibold text-base px-10 py-7 hover:shadow-xl transition-shadow duration-500">
+              <Button size="lg" className="btn btn-primary rounded-full px-10 py-4 h-14 text-lg border-none shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] hover:-translate-y-1 transition-all duration-300">
                 Book Appointment
               </Button>
             </Link>
             <Link to="/services">
-              <Button size="lg" variant="outline" className="border-secondary-foreground/20 text-secondary-foreground hover:bg-secondary-foreground/5 text-base px-10 py-7 transition-all duration-500">
-                View Services <ChevronRight className="w-4 h-4 ml-1" />
+              <Button size="lg" variant="outline" className="btn btn-outline btn-primary rounded-full px-10 py-4 h-14 text-lg hover:-translate-y-1 transition-all duration-300 bg-base-100/20 backdrop-blur-sm border-2">
+                View Services <ChevronRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
           </motion.div>
@@ -136,30 +144,32 @@ const Index = () => {
           >
             {featuredServices.map((service) => (
               <SwiperSlide key={service.name}>
-                <div className="premium-card p-7 text-center group cursor-pointer">
-                  <div className="w-12 h-12 mx-auto mb-5 rounded-full bg-accent flex items-center justify-center group-hover:bg-primary/10 transition-colors duration-500">
-                    <Scissors className="w-5 h-5 text-primary" />
+                <div className="card bg-base-100 shadow-xl hover:shadow-[0_20px_50px_rgba(212,175,55,0.15)] transition-all duration-500 hover:-translate-y-2 border border-primary/10 group cursor-pointer overflow-hidden h-full">
+                  <div className="card-body items-center text-center p-8">
+                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary transition-all duration-500">
+                      <Scissors className="w-7 h-7 text-primary group-hover:text-primary-content transition-colors duration-500" />
+                    </div>
+                    <h3 className="card-title font-heading text-xl text-base-content mb-2">{service.name}</h3>
+                    <div className="flex items-baseline justify-center gap-2 mb-6">
+                      <span className="text-primary font-bold text-2xl">{service.cashPrice}</span>
+                      <span className="text-base-content/50 text-sm">Cash</span>
+                    </div>
+                    <Link to="/book" className="w-full mt-auto">
+                      <Button className="btn btn-primary w-full rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 border-none shadow-md hover:shadow-lg">
+                        Book Now
+                      </Button>
+                    </Link>
                   </div>
-                  <h3 className="font-heading text-lg text-foreground mb-3 group-hover:text-primary transition-colors duration-500">{service.name}</h3>
-                  <div className="flex items-center justify-center gap-3 mb-5">
-                    <span className="text-primary font-bold text-xl">{service.cashPrice}</span>
-                    <span className="text-muted-foreground text-xs">Cash</span>
-                  </div>
-                  <Link to="/book">
-                    <Button size="sm" className="w-full gold-gradient text-background font-semibold text-xs opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
-                      Book Now
-                    </Button>
-                  </Link>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
 
           <ScrollReveal delay={200}>
-            <div className="text-center mt-10">
+            <div className="text-center mt-12">
               <Link to="/services">
-                <Button variant="outline" size="lg" className="border-primary/20 text-primary hover:bg-accent transition-all duration-500">
-                  View All Services <ChevronRight className="w-4 h-4 ml-1" />
+                <Button variant="outline" size="lg" className="btn btn-outline btn-primary rounded-full px-8 hover:-translate-y-1 transition-transform">
+                  View All Services <ChevronRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
             </div>
@@ -177,10 +187,10 @@ const Index = () => {
         </ScrollReveal>
         <div className="absolute inset-0 z-10 flex items-center justify-center">
           <ScrollReveal>
-            <div className="text-center">
-              <p className="text-primary/70 text-xs uppercase tracking-[0.3em] mb-4">Est. 2025</p>
-              <h2 className="font-heading text-3xl md:text-5xl text-secondary-foreground leading-tight">
-                Where Hair Meets <span className="gold-text-gradient">The Artist</span>
+            <div className="text-center px-4">
+              <p className="text-primary-content/80 text-sm uppercase tracking-[0.4em] mb-6 font-medium drop-shadow-md">Est. 2025</p>
+              <h2 className="font-heading text-4xl md:text-6xl text-primary-content leading-tight drop-shadow-xl font-bold">
+                Where Hair Meets <span className="text-primary drop-shadow-md">The Artist</span>
               </h2>
             </div>
           </ScrollReveal>
@@ -199,32 +209,34 @@ const Index = () => {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {barbers.map((barber, i) => (
               <ScrollReveal key={barber.name} delay={i * 100}>
-                <div className="premium-card overflow-hidden group">
-                  <div className="h-80 relative overflow-hidden">
+                <div className="card bg-base-100 shadow-lg hover:shadow-[0_20px_50px_rgba(212,175,55,0.2)] transition-all duration-500 group overflow-hidden border border-primary/5">
+                  <figure className="h-80 relative overflow-hidden">
                     <img
                       src={barberImages[i]}
                       alt={barber.name}
-                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                      <Link to="/book">
-                        <Button size="sm" className="w-full gold-gradient text-background font-semibold">
-                          Book with Me
-                        </Button>
-                      </Link>
+                    <div className="absolute inset-0 bg-gradient-to-t from-base-300/90 via-base-300/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                    <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end h-full">
+                      <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 flex flex-col items-center">
+                        <Link to="/book" className="w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                          <Button className="btn btn-primary w-full rounded-full border-none shadow-lg hover:shadow-xl">
+                            Book with Me
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-6 text-center">
-                    <h3 className="font-heading text-xl text-foreground mb-1">{barber.name}</h3>
-                    <p className="text-primary text-sm font-medium mb-1">{barber.specialty}</p>
-                    <p className="text-muted-foreground text-xs">{barber.experience} experience</p>
-                    <div className="flex justify-center gap-0.5 mt-3">
+                  </figure>
+                  <div className="card-body items-center text-center pt-6 pb-8 bg-base-100 relative z-10">
+                    <h3 className="card-title font-heading text-2xl text-base-content mb-1 group-hover:text-primary transition-colors duration-300">{barber.name}</h3>
+                    <p className="text-primary font-medium tracking-wide text-sm">{barber.specialty}</p>
+                    <p className="text-base-content/60 text-sm mt-2">{barber.experience} experience</p>
+                    <div className="flex gap-1 mt-4">
                       {Array.from({ length: 5 }).map((_, j) => (
-                        <Star key={j} className="w-3.5 h-3.5 text-primary fill-primary" />
+                        <Star key={j} className="w-4 h-4 text-primary fill-primary drop-shadow-sm" />
                       ))}
                     </div>
                   </div>
@@ -261,15 +273,22 @@ const Index = () => {
           >
             {reviews.map((review) => (
               <SwiperSlide key={review.name}>
-                <div className="glass-testimonial p-8 h-full">
-                  <Quote className="w-7 h-7 text-primary/25 mb-4" />
-                  <div className="flex gap-0.5 mb-4">
-                    {Array.from({ length: review.rating }).map((_, j) => (
-                      <Star key={j} className="w-3.5 h-3.5 text-primary fill-primary" />
-                    ))}
+                <div className="card bg-base-100/60 backdrop-blur-xl border border-primary/10 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                  <div className="card-body p-8">
+                    <Quote className="w-10 h-10 text-primary/20 mb-6" />
+                    <div className="flex gap-1 mb-6">
+                      {Array.from({ length: review.rating }).map((_, j) => (
+                        <Star key={j} className="w-4 h-4 text-primary fill-primary" />
+                      ))}
+                    </div>
+                    <p className="text-base-content/80 text-base mb-8 italic leading-relaxed flex-grow">"{review.text}"</p>
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+                        {review.name.charAt(0)}
+                      </div>
+                      <p className="text-base-content font-semibold">{review.name}</p>
+                    </div>
                   </div>
-                  <p className="text-muted-foreground text-sm mb-6 italic leading-relaxed">"{review.text}"</p>
-                  <p className="text-foreground font-medium text-sm">{review.name}</p>
                 </div>
               </SwiperSlide>
             ))}
@@ -328,45 +347,49 @@ const Index = () => {
               </div>
             </ScrollReveal>
             <ScrollReveal direction="right" delay={100}>
-              <div className="premium-card p-8 flex flex-col justify-center gap-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-primary" />
+              <div className="card bg-base-100 shadow-xl border border-primary/10 p-8 flex flex-col justify-center gap-8 h-full">
+                <div className="flex items-start gap-5">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-heading text-lg text-foreground mb-1">Address</h4>
-                    <p className="text-muted-foreground text-sm">263 Heaths Rd, Werribee VIC 3030, Australia</p>
+                    <h4 className="font-heading text-xl text-base-content mb-2">Address</h4>
+                    <p className="text-base-content/70 text-base">263 Heaths Rd, Werribee VIC 3030, Australia</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5 text-primary" />
+                <div className="flex items-start gap-5">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <Phone className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-heading text-lg text-foreground mb-1">Phone</h4>
-                    <a href="tel:+61460309333" className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300">+61 460 309 333</a>
+                    <h4 className="font-heading text-xl text-base-content mb-2">Phone</h4>
+                    <a href="tel:+61460309333" className="text-base-content/70 text-base hover:text-primary transition-colors duration-300">+61 460 309 333</a>
                   </div>
                 </div>
-                <div className="flex gap-3 mt-2">
-                  <a href="tel:+61460309333">
-                    <Button className="gold-gradient text-background font-semibold shadow-md transition-shadow duration-500 hover:shadow-xl">
-                      <Phone className="w-4 h-4 mr-1" /> Call Now
+                <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                  <a href="tel:+61460309333" className="w-full sm:w-auto">
+                    <Button className="btn btn-primary w-full rounded-full shadow-md hover:shadow-lg border-none hover:-translate-y-1 transition-all">
+                      <Phone className="w-5 h-5 mr-2" /> Call Now
                     </Button>
                   </a>
-                  <a href="https://maps.google.com/?q=263+Heaths+Rd+Werribee+VIC+3030" target="_blank" rel="noopener noreferrer">
-                    <Button variant="outline" className="border-primary/20 text-primary hover:bg-accent transition-all duration-500">
-                      <MapPin className="w-4 h-4 mr-1" /> Directions
+                  <a href="https://maps.google.com/?q=263+Heaths+Rd+Werribee+VIC+3030" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                    <Button variant="outline" className="btn btn-outline btn-primary w-full rounded-full hover:-translate-y-1 transition-all">
+                      <MapPin className="w-5 h-5 mr-2" /> Directions
                     </Button>
                   </a>
                 </div>
-                <div className="mt-4 flex gap-4">
-                  <div>
-                    <p className="text-muted-foreground text-xs mb-2">Instagram</p>
-                    <img src={qrCode} alt="Instagram QR" className="w-20 h-20 rounded-xl border border-border" />
+                <div className="mt-6 flex gap-6">
+                  <div className="group">
+                    <p className="text-base-content/50 text-sm mb-3 group-hover:text-primary transition-colors">Instagram</p>
+                    <div className="p-2 bg-base-100 rounded-2xl shadow-sm border border-base-300 transition-transform duration-300 group-hover:scale-105 group-hover:border-primary/30">
+                      <img src={qrCode} alt="Instagram QR" className="w-24 h-24 rounded-xl" />
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-muted-foreground text-xs mb-2">TikTok</p>
-                    <img src={tiktokQr} alt="TikTok QR" className="w-20 h-20 rounded-xl border border-border" />
+                  <div className="group">
+                    <p className="text-base-content/50 text-sm mb-3 group-hover:text-primary transition-colors">TikTok</p>
+                    <div className="p-2 bg-base-100 rounded-2xl shadow-sm border border-base-300 transition-transform duration-300 group-hover:scale-105 group-hover:border-primary/30">
+                      <img src={tiktokQr} alt="TikTok QR" className="w-24 h-24 rounded-xl" />
+                    </div>
                   </div>
                 </div>
               </div>

@@ -40,18 +40,17 @@ const Contact = () => {
 
   return (
     <div className="overflow-hidden">
-      {/* Hero */}
       <motion.section variants={pageEnter} initial="hidden" animate="visible" className="py-28 md:py-36 relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--gold)/0.06),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--p)/0.1),transparent_70%)] opacity-50" />
         <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.div variants={fadeUp} className="w-16 h-px mx-auto mb-6 bg-primary/40" />
-          <motion.p variants={fadeUp} className="text-primary/70 text-xs uppercase tracking-[0.3em] mb-4 font-body font-medium">
+          <motion.div variants={fadeUp} className="w-20 h-1 mx-auto mb-8 bg-primary/40 rounded-full" />
+          <motion.p variants={fadeUp} className="text-secondary-content/80 text-sm uppercase tracking-[0.4em] mb-4 font-body font-medium">
             Get In Touch
           </motion.p>
-          <motion.h1 variants={fadeUp} className="font-heading text-4xl md:text-6xl text-foreground mb-6">
-            Contact <span className="gold-text-gradient">Us</span>
+          <motion.h1 variants={fadeUp} className="font-heading text-5xl md:text-7xl text-base-content mb-6 font-bold tracking-tight">
+            Contact <span className="text-primary drop-shadow-md">Us</span>
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-muted-foreground text-lg max-w-xl mx-auto">
+          <motion.p variants={fadeUp} className="text-base-content/70 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Book your appointment or reach out — we'd love to hear from you.
           </motion.p>
         </div>
@@ -60,7 +59,7 @@ const Contact = () => {
       {/* Divider */}
       <div className="flex items-center justify-center py-4">
         <div className="h-px flex-1 max-w-[120px] bg-gradient-to-r from-transparent to-primary/30" />
-        <Scissors className="w-4 h-4 text-primary/40 mx-3" />
+        <Scissors className="w-5 h-5 text-primary/40 mx-4" />
         <div className="h-px flex-1 max-w-[120px] bg-gradient-to-l from-transparent to-primary/30" />
       </div>
 
@@ -69,26 +68,26 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
             {/* Form */}
             <ScrollReveal direction="left">
-              <form onSubmit={handleSubmit} className="premium-card p-8 space-y-5">
-                <h2 className="font-heading text-2xl text-foreground mb-2">Send a Message</h2>
-                <div>
-                  <label className="text-sm text-muted-foreground mb-1 block">Name *</label>
-                  <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" maxLength={100} className="bg-background/50 border-border focus:border-primary transition-colors duration-500" />
+              <form onSubmit={handleSubmit} className="card bg-base-100/80 backdrop-blur-xl shadow-xl border border-primary/10 p-8 space-y-6">
+                <h2 className="font-heading text-3xl text-base-content mb-4 text-center">Send a Message</h2>
+                <div className="form-control w-full">
+                  <label className="label text-sm text-base-content/70 font-medium">Name <span className="text-error ml-1">*</span></label>
+                  <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" maxLength={100} className="input input-bordered input-primary w-full bg-base-100/50" />
                 </div>
-                <div>
-                  <label className="text-sm text-muted-foreground mb-1 block">Email *</label>
-                  <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="your@email.com" maxLength={255} className="bg-background/50 border-border focus:border-primary transition-colors duration-500" />
+                <div className="form-control w-full">
+                  <label className="label text-sm text-base-content/70 font-medium">Email <span className="text-error ml-1">*</span></label>
+                  <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="your@email.com" maxLength={255} className="input input-bordered input-primary w-full bg-base-100/50" />
                 </div>
-                <div>
-                  <label className="text-sm text-muted-foreground mb-1 block">Phone</label>
-                  <Input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+61 ..." maxLength={20} className="bg-background/50 border-border focus:border-primary transition-colors duration-500" />
+                <div className="form-control w-full">
+                  <label className="label text-sm text-base-content/70 font-medium">Phone</label>
+                  <Input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+61 ..." maxLength={20} className="input input-bordered input-primary w-full bg-base-100/50" />
                 </div>
-                <div>
-                  <label className="text-sm text-muted-foreground mb-1 block">Message *</label>
-                  <Textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell us what you need..." maxLength={1000} rows={4} className="bg-background/50 border-border focus:border-primary transition-colors duration-500" />
+                <div className="form-control w-full">
+                  <label className="label text-sm text-base-content/70 font-medium">Message <span className="text-error ml-1">*</span></label>
+                  <Textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell us what you need..." maxLength={1000} rows={4} className="textarea textarea-primary w-full bg-base-100/50" />
                 </div>
-                <Button type="submit" className="w-full gold-gradient text-background font-semibold py-6 transition-shadow duration-500 hover:shadow-xl">
-                  <Send className="w-4 h-4 mr-2" /> Send Message
+                <Button type="submit" className="btn btn-primary w-full rounded-full shadow-md hover:shadow-lg border-none hover:-translate-y-1 transition-all h-12 text-lg mt-4">
+                  <Send className="w-5 h-5 mr-2" /> Send Message
                 </Button>
               </form>
             </ScrollReveal>
@@ -96,52 +95,46 @@ const Contact = () => {
             {/* Info + Map */}
             <div className="space-y-6">
               <ScrollReveal direction="right" delay={100}>
-                <div className="premium-card p-8 space-y-5">
-                  <h2 className="font-heading text-2xl text-foreground mb-2">Business Info</h2>
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                    <p className="text-muted-foreground text-sm">263 Heaths Rd, Werribee VIC 3030, Australia</p>
+                <div className="card bg-base-100 shadow-xl border border-primary/10 p-8 space-y-6">
+                  <h2 className="font-heading text-3xl text-base-content mb-4 text-center">Business Info</h2>
+                  <div className="flex items-start gap-4 p-3 bg-base-200/50 rounded-xl hover:bg-base-200 transition-colors">
+                    <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                      <MapPin className="w-6 h-6 text-primary" />
+                    </div>
+                    <p className="text-base-content/80 text-base mt-1">263 Heaths Rd, Werribee VIC 3030, Australia</p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-primary shrink-0" />
-                    <a href="tel:+61460309333" className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300">+61 460 309 333</a>
+                  <div className="flex items-center gap-4 p-3 bg-base-200/50 rounded-xl hover:bg-base-200 transition-colors">
+                    <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                      <Phone className="w-6 h-6 text-primary" />
+                    </div>
+                    <a href="tel:+61460309333" className="text-base-content/80 text-base hover:text-primary transition-colors duration-300">+61 460 309 333</a>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Instagram className="w-5 h-5 text-primary shrink-0" />
-                    <a href="https://www.instagram.com/gabru_looks/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300">@gabru_looks</a>
+                  <div className="flex items-center gap-4 p-3 bg-base-200/50 rounded-xl hover:bg-base-200 transition-colors">
+                    <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                      <Instagram className="w-6 h-6 text-primary" />
+                    </div>
+                    <a href="https://www.instagram.com/gabru_looks/" target="_blank" rel="noopener noreferrer" className="text-base-content/80 text-base hover:text-primary transition-colors duration-300">@gabru_looks</a>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <TikTokIcon />
-                    <span className="text-muted-foreground text-sm">@gabru_looks</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                    <div className="text-muted-foreground text-sm">
+                  <div className="flex items-start gap-4 p-3 bg-base-200/50 rounded-xl hover:bg-base-200 transition-colors">
+                    <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                      <Clock className="w-6 h-6 text-primary mt-0.5" />
+                    </div>
+                    <div className="text-base-content/80 text-base space-y-1 mt-1">
                       <p>Mon–Fri: 9:00 AM – 7:00 PM</p>
                       <p>Sat–Sun: 9:00 AM – 6:00 PM</p>
                     </div>
                   </div>
-                  <div className="flex gap-3 pt-2">
-                    <a href="tel:+61460309333">
-                      <Button className="gold-gradient text-background font-semibold transition-shadow duration-500 hover:shadow-xl">
-                        <Phone className="w-4 h-4 mr-1" /> Call Now
+                  <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                    <a href="tel:+61460309333" className="w-full">
+                      <Button className="btn btn-primary w-full rounded-full shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-none">
+                        <Phone className="w-5 h-5 mr-2" /> Call Now
                       </Button>
                     </a>
-                    <a href="https://maps.google.com/?q=263+Heaths+Rd+Werribee+VIC+3030" target="_blank" rel="noopener noreferrer">
-                      <Button variant="outline" className="border-primary/20 text-primary hover:bg-accent transition-all duration-500">
-                        <MapPin className="w-4 h-4 mr-1" /> Directions
+                    <a href="https://maps.google.com/?q=263+Heaths+Rd+Werribee+VIC+3030" target="_blank" rel="noopener noreferrer" className="w-full">
+                      <Button variant="outline" className="btn btn-outline btn-primary w-full rounded-full transition-all duration-300 hover:-translate-y-1">
+                        <MapPin className="w-5 h-5 mr-2" /> Directions
                       </Button>
                     </a>
-                  </div>
-                  <div className="pt-4 border-t border-border flex gap-4">
-                    <div>
-                      <p className="text-muted-foreground text-xs mb-2">Instagram</p>
-                      <img src={qrCode} alt="Instagram QR" className="w-20 h-20 rounded-xl border border-border" />
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground text-xs mb-2">TikTok</p>
-                      <img src={tiktokQr} alt="TikTok QR" className="w-20 h-20 rounded-xl border border-border" />
-                    </div>
                   </div>
                 </div>
               </ScrollReveal>

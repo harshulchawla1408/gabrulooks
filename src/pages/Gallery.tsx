@@ -37,18 +37,17 @@ const Gallery = () => {
 
   return (
     <div className="overflow-hidden">
-      {/* Hero */}
       <motion.section variants={pageEnter} initial="hidden" animate="visible" className="py-28 md:py-36 relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--gold)/0.06),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--p)/0.1),transparent_70%)] opacity-50" />
         <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.div variants={fadeUp} className="w-16 h-px mx-auto mb-6 bg-primary/40" />
-          <motion.p variants={fadeUp} className="text-primary/70 text-xs uppercase tracking-[0.3em] mb-4 font-body font-medium">
+          <motion.div variants={fadeUp} className="w-20 h-1 mx-auto mb-8 bg-primary/40 rounded-full" />
+          <motion.p variants={fadeUp} className="text-secondary-content/80 text-sm uppercase tracking-[0.4em] mb-4 font-body font-medium">
             Our Work
           </motion.p>
-          <motion.h1 variants={fadeUp} className="font-heading text-4xl md:text-6xl text-foreground mb-6">
-            <span className="gold-text-gradient">Gallery</span>
+          <motion.h1 variants={fadeUp} className="font-heading text-5xl md:text-7xl text-base-content mb-6 font-bold tracking-tight">
+            Our <span className="text-primary drop-shadow-md">Gallery</span>
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-muted-foreground text-lg max-w-xl mx-auto">
+          <motion.p variants={fadeUp} className="text-base-content/70 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             A showcase of our finest work — precision cuts, bold styles, and stunning transformations.
           </motion.p>
         </div>
@@ -57,25 +56,24 @@ const Gallery = () => {
       {/* Divider */}
       <div className="flex items-center justify-center py-4">
         <div className="h-px flex-1 max-w-[120px] bg-gradient-to-r from-transparent to-primary/30" />
-        <Scissors className="w-4 h-4 text-primary/40 mx-3" />
+        <Scissors className="w-5 h-5 text-primary/40 mx-4" />
         <div className="h-px flex-1 max-w-[120px] bg-gradient-to-l from-transparent to-primary/30" />
       </div>
 
       {/* Masonry Grid */}
-      <section className="pb-28 pt-8">
+      <section className="pb-28 pt-8 bg-base-200/50">
         <div className="container mx-auto px-4">
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 max-w-6xl mx-auto">
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 max-w-7xl mx-auto">
             {galleryImages.map((item, i) => (
               <ScrollReveal key={item.id} delay={i * 50}>
                 <div
-                  className={`mb-4 break-inside-avoid ${heights[i % heights.length]} rounded-2xl overflow-hidden relative group cursor-pointer`}
+                  className={`mb-6 break-inside-avoid ${heights[i % heights.length]} rounded-3xl overflow-hidden relative group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500`}
                   onClick={() => setSelected(item.id)}
                 >
-                  <img src={item.src} alt={item.label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-secondary/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute bottom-4 left-4">
-                      <p className="text-secondary-foreground text-sm font-medium">{item.label}</p>
-                    </div>
+                  <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                  <img src={item.src} alt={item.label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-base-300/90 via-base-300/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex flex-col justify-end p-6">
+                    <p className="text-primary-content text-lg font-heading font-semibold tracking-wide drop-shadow-md transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{item.label}</p>
                   </div>
                 </div>
               </ScrollReveal>
@@ -91,25 +89,31 @@ const Gallery = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-secondary/90 backdrop-blur-xl flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-base-300/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-10"
             onClick={() => setSelected(null)}
           >
-            <button className="absolute top-6 right-6 text-secondary-foreground hover:text-primary transition-colors z-10" onClick={() => setSelected(null)}>
+            <button className="absolute top-6 right-6 text-base-content/70 hover:text-primary hover:rotate-90 transition-all duration-300 z-[60] bg-base-100/50 hover:bg-base-100 p-2 rounded-full backdrop-blur-md" onClick={() => setSelected(null)}>
               <X className="w-8 h-8" />
             </button>
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="w-full max-w-3xl max-h-[80vh] rounded-2xl overflow-hidden"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, type: "spring", stiffness: 300, damping: 25 }}
+              className="w-full max-w-5xl max-h-[85vh] rounded-3xl overflow-hidden shadow-2xl relative"
               onClick={(e) => e.stopPropagation()}
             >
+              <div className="absolute inset-0 border-2 border-primary/20 rounded-3xl pointer-events-none z-10"></div>
               <img
                 src={galleryImages.find((g) => g.id === selected)?.src}
                 alt={galleryImages.find((g) => g.id === selected)?.label}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain bg-base-100/50"
               />
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-base-300/90 to-transparent pointer-events-none">
+                <p className="text-primary-content text-2xl font-heading text-center drop-shadow-md">
+                  {galleryImages.find((g) => g.id === selected)?.label}
+                </p>
+              </div>
             </motion.div>
           </motion.div>
         )}

@@ -21,19 +21,18 @@ const Services = () => {
 
   return (
     <div className="overflow-hidden">
-      {/* Hero */}
       <motion.section variants={pageEnter} initial="hidden" animate="visible" className="py-28 md:py-36 relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--gold)/0.06),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--p)/0.1),transparent_70%)] opacity-50" />
         <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.div variants={fadeUp} className="w-16 h-px mx-auto mb-6 bg-primary/40" />
-          <motion.p variants={fadeUp} className="text-primary/70 text-xs uppercase tracking-[0.3em] mb-4 font-body font-medium">
+          <motion.div variants={fadeUp} className="w-20 h-1 mx-auto mb-8 bg-primary/40 rounded-full" />
+          <motion.p variants={fadeUp} className="text-secondary-content/80 text-sm uppercase tracking-[0.4em] mb-4 font-body font-medium">
             What We Offer
           </motion.p>
-          <motion.h1 variants={fadeUp} className="font-heading text-4xl md:text-6xl text-foreground mb-6">
-            Our <span className="gold-text-gradient">Services</span>
+          <motion.h1 variants={fadeUp} className="font-heading text-5xl md:text-7xl text-base-content mb-6 font-bold tracking-tight">
+            Our <span className="text-primary drop-shadow-md">Services</span>
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Premium grooming services for men and women. Every service includes a dedicated session with our expert stylists.
+          <motion.p variants={fadeUp} className="text-base-content/70 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            Premium grooming services for men and women. Every service includes a dedicated session with our expert stylists to ensure you leave looking your best.
           </motion.p>
         </div>
       </motion.section>
@@ -48,7 +47,7 @@ const Services = () => {
       {/* Tabs + Services */}
       <section className="pb-28 pt-8">
         <div className="container mx-auto px-4">
-          <div className="flex justify-center gap-4 mb-14">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
             {[
               { key: "men" as const, label: "Men's Services", icon: Scissors },
               { key: "women" as const, label: "Women's Services", icon: Sparkles },
@@ -56,13 +55,13 @@ const Services = () => {
               <button
                 key={key}
                 onClick={() => setTab(key)}
-                className={`flex items-center gap-2 px-8 py-3 rounded-full text-sm font-semibold tracking-wide uppercase transition-all duration-500 ${
+                className={`flex items-center justify-center gap-3 px-10 py-4 rounded-full text-base font-semibold tracking-wide uppercase transition-all duration-300 w-full sm:w-auto ${
                   tab === key
-                    ? "gold-gradient text-background shadow-lg"
-                    : "glass-card text-muted-foreground hover:text-foreground"
+                    ? "bg-primary text-primary-content shadow-[0_8px_30px_rgba(212,175,55,0.4)] scale-105"
+                    : "bg-base-100/50 backdrop-blur-md border border-base-300 text-base-content/70 hover:text-primary hover:border-primary/50 hover:bg-base-100"
                 }`}
               >
-                <Icon className="w-4 h-4" /> {label}
+                <Icon className={`w-5 h-5 ${tab === key ? "animate-pulse" : ""}`} /> {label}
               </button>
             ))}
           </div>
@@ -78,30 +77,35 @@ const Services = () => {
             >
               {filtered.map((service, i) => (
                 <ScrollReveal key={service.name} delay={i * 40}>
-                  <div className="premium-card p-6 group">
-                    <div className="flex items-start justify-between mb-4">
-                      <h3 className="font-heading text-lg text-foreground group-hover:text-primary transition-colors duration-500">{service.name}</h3>
-                      {tab === "men" ? (
-                        <Scissors className="w-5 h-5 text-primary/30 shrink-0" />
-                      ) : (
-                        <Sparkles className="w-5 h-5 text-primary/30 shrink-0" />
-                      )}
-                    </div>
-                    <div className="flex gap-4 mb-5">
-                      <div>
-                        <p className="text-primary font-bold text-xl">{service.cashPrice}</p>
-                        <p className="text-muted-foreground text-xs">Cash</p>
+                  <div className="card bg-base-100/80 backdrop-blur-xl border border-primary/10 shadow-lg hover:shadow-[0_20px_50px_rgba(212,175,55,0.15)] transition-all duration-500 group overflow-hidden h-full">
+                    <div className="card-body p-8">
+                      <div className="flex items-start justify-between mb-6">
+                        <h3 className="card-title font-heading text-2xl text-base-content group-hover:text-primary transition-colors duration-300">{service.name}</h3>
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-content transition-colors duration-500">
+                          {tab === "men" ? (
+                            <Scissors className="w-6 h-6 text-primary group-hover:text-primary-content transition-colors" />
+                          ) : (
+                            <Sparkles className="w-6 h-6 text-primary group-hover:text-primary-content transition-colors" />
+                          )}
+                        </div>
                       </div>
-                      <div className="border-l border-border pl-4">
-                        <p className="text-foreground font-bold text-xl">{service.cardPrice}</p>
-                        <p className="text-muted-foreground text-xs">Card</p>
+                      <div className="flex items-center gap-6 mb-8 mt-auto">
+                        <div>
+                          <p className="text-primary font-bold text-3xl">{service.cashPrice}</p>
+                          <p className="text-base-content/50 text-sm font-medium mt-1 uppercase tracking-wider">Cash</p>
+                        </div>
+                        <div className="h-10 w-px bg-base-300"></div>
+                        <div>
+                          <p className="text-base-content/80 font-bold text-2xl">{service.cardPrice}</p>
+                          <p className="text-base-content/50 text-sm font-medium mt-1 uppercase tracking-wider">Card</p>
+                        </div>
                       </div>
+                      <Link to="/book" className="w-full mt-auto">
+                        <Button className="btn btn-primary w-full rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 border-none shadow-md hover:shadow-lg">
+                          Book Now
+                        </Button>
+                      </Link>
                     </div>
-                    <Link to="/book">
-                      <Button size="sm" className="w-full gold-gradient text-background font-semibold text-xs opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
-                        Book Now
-                      </Button>
-                    </Link>
                   </div>
                 </ScrollReveal>
               ))}

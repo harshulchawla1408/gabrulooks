@@ -31,37 +31,43 @@ const ReceptionistDashboard = () => {
   const [tab, setTab] = useState<"today" | "walkin">("today");
 
   return (
-    <div className="py-12">
-      <div className="container mx-auto px-4 max-w-5xl">
+    <div className="py-16 md:py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--p)/0.05),transparent_70%)] opacity-50 z-0" />
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4 bg-base-100/80 backdrop-blur-xl p-6 rounded-2xl border border-primary/10 shadow-sm">
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <h1 className="font-heading text-3xl text-foreground">Reception</h1>
-                <span className="text-xs gold-gradient text-background px-2 py-0.5 rounded-full font-semibold">RECEPTIONIST</span>
+              <div className="flex items-center gap-3 mb-1">
+                <p className="text-primary tracking-[0.2em] text-xs uppercase font-bold">Front Desk</p>
+                <div className="badge badge-primary badge-sm uppercase font-bold tracking-wider">Receptionist</div>
               </div>
-              <p className="text-muted-foreground text-sm">Welcome, {user?.user_metadata?.full_name || user?.email || "Receptionist"}</p>
+              <h1 className="font-heading text-4xl text-base-content font-bold">Reception Dashboard</h1>
+              <p className="text-base-content/60 text-sm mt-1">Welcome back, {user?.user_metadata?.full_name || user?.email || "Receptionist"}</p>
             </div>
-            <Button variant="outline" onClick={signOut} className="border-primary/30 text-primary hover:bg-primary/10">Sign Out</Button>
+            <Button variant="outline" onClick={signOut} className="btn btn-outline btn-error rounded-full hover:bg-error hover:text-error-content hover:border-error transition-all px-6">
+              Sign Out
+            </Button>
           </div>
 
-          <div className="flex gap-2 mb-6">
-            <Button
-              variant={tab === "today" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setTab("today")}
-              className={tab === "today" ? "gold-gradient text-background" : "border-primary/30"}
-            >
-              <Calendar className="w-4 h-4 mr-1" /> Today's Schedule
-            </Button>
-            <Button
-              variant={tab === "walkin" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setTab("walkin")}
-              className={tab === "walkin" ? "gold-gradient text-background" : "border-primary/30"}
-            >
-              <UserPlus className="w-4 h-4 mr-1" /> Walk-In Booking
-            </Button>
+          <div className="flex overflow-x-auto pb-4 mb-8 hide-scrollbar scroll-smooth">
+            <div className="flex gap-3 px-1">
+              <button
+                onClick={() => setTab("today")}
+                className={`btn rounded-full px-6 transition-all border-none ${
+                  tab === "today" ? "btn-primary shadow-md shadow-primary/20 hover:-translate-y-0.5" : "bg-base-200/50 hover:bg-base-200 text-base-content/70 hover:text-base-content"
+                }`}
+              >
+                <Calendar className={`w-4 h-4 mr-2 ${tab === "today" ? "text-primary-content" : "text-primary"}`} /> <span className="whitespace-nowrap">Today's Schedule</span>
+              </button>
+              <button
+                onClick={() => setTab("walkin")}
+                className={`btn rounded-full px-6 transition-all border-none ${
+                  tab === "walkin" ? "btn-primary shadow-md shadow-primary/20 hover:-translate-y-0.5" : "bg-base-200/50 hover:bg-base-200 text-base-content/70 hover:text-base-content"
+                }`}
+              >
+                <UserPlus className={`w-4 h-4 mr-2 ${tab === "walkin" ? "text-primary-content" : "text-primary"}`} /> <span className="whitespace-nowrap">Walk-In Booking</span>
+              </button>
+            </div>
           </div>
 
           {tab === "today" && <TodaySchedule />}
@@ -86,32 +92,62 @@ const TodaySchedule = () => {
   }
 
   return (
-    <div className="space-y-3">
-      <h3 className="font-heading text-lg text-foreground">Today — {format(new Date(), "EEEE, MMMM d")}</h3>
-      {!bookings?.length ? (
-        <p className="text-center text-muted-foreground py-8">No bookings for today</p>
-      ) : (
-        bookings.map(b => {
-          const service = getService(b.service_id);
-          const barber = getBarber(b.barber_id);
-          return (
-            <div key={b.id} className="p-4 rounded-xl border border-border bg-card flex items-start justify-between gap-3">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium text-foreground text-sm">{service?.name}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[b.status]}`}>{b.status}</span>
+            <div className="space-y-6">
+              <h3 className="font-heading text-2xl text-base-content flex items-center gap-2 border-b border-base-300 pb-2">
+                <Calendar className="w-6 h-6 text-primary" /> Today — {format(new Date(), "EEEE, MMMM d")}
+              </h3>
+              {!bookings?.length ? (
+                <div className="text-center py-16 bg-base-200/50 border border-base-300 rounded-3xl">
+                  <div className="w-20 h-20 bg-base-100 rounded-full flex items-center justify-center mx-auto mb-6 opacity-50">
+                    <Calendar className="w-10 h-10 text-base-content/40" />
+                  </div>
+                  <h4 className="font-heading text-2xl text-base-content mb-2">Clear Schedule</h4>
+                  <p className="text-base-content/60 text-lg">No bookings for today yet.</p>
                 </div>
-                <p className="text-xs text-muted-foreground flex items-center gap-3">
-                  <span className="flex items-center gap-1"><User className="w-3 h-3" /> {barber?.display_name}</span>
-                  <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {formatSlotTime(b.start_time)} – {formatSlotTime(b.end_time)}</span>
-                </p>
-              </div>
+              ) : (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {bookings.map(b => {
+                    const service = getService(b.service_id);
+                    const barber = getBarber(b.barber_id);
+                    return (
+                      <div key={b.id} className="p-5 rounded-2xl border border-primary/10 bg-base-100/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div className={`absolute top-0 left-0 w-1.5 h-full ${
+                          b.status === 'confirmed' ? 'bg-primary' : 
+                          b.status === 'completed' ? 'bg-success' : 
+                          b.status === 'cancelled' ? 'bg-error' : 'bg-base-300'
+                        }`} />
+                        <div className="pl-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-3">
+                              <span className="font-bold text-base-content text-lg">{service?.name}</span>
+                              <span className={`badge badge-sm uppercase font-bold tracking-wider ${
+                                b.status === "completed" ? "badge-success badge-outline"
+                                  : b.status === "cancelled" ? "badge-error badge-outline"
+                                  : b.status === "confirmed" ? "badge-primary badge-outline"
+                                    : "badge-ghost"
+                              }`}>
+                                {b.status}
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-base-content/70">
+                              <span className="flex items-center gap-1.5 font-medium"><User className="w-4 h-4 text-primary" /> {barber?.display_name}</span>
+                              <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-primary" /> {formatSlotTime(b.start_time)} – {formatSlotTime(b.end_time)}</span>
+                            </div>
+                          </div>
+                          
+                          {b.status === 'confirmed' && (
+                            <div className="text-right sm:text-left self-end sm:self-center opacity-0 group-hover:opacity-100 transition-opacity">
+                               <p className="text-xs text-base-content/50 uppercase tracking-wider font-semibold">Ready</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
-        })
-      )}
-    </div>
-  );
 };
 
 const WalkInBooking = ({ userId }: { userId?: string }) => {
@@ -153,95 +189,134 @@ const WalkInBooking = ({ userId }: { userId?: string }) => {
   };
 
   return (
-    <div className="space-y-5">
-      <h3 className="font-heading text-lg text-foreground">Create Walk-In Booking</h3>
-
-      <div className="space-y-3">
+    <div className="card bg-base-100/80 backdrop-blur-xl shadow-xl border border-primary/10 p-6 sm:p-8 max-w-3xl mx-auto">
+      <div className="flex items-center gap-3 mb-8 border-b border-base-300 pb-4">
+        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center"><UserPlus className="w-6 h-6 text-primary" /></div>
         <div>
-          <label className="text-xs font-medium text-muted-foreground mb-1 block">Customer Name (optional)</label>
-          <Input value={customerName} onChange={e => setCustomerName(e.target.value)} placeholder="Walk-in customer name" />
+          <h3 className="font-heading text-2xl text-base-content">Walk-In Booking</h3>
+          <p className="text-sm text-base-content/60">Fast-track booking for in-store customers</p>
+        </div>
+      </div>
+
+      <div className="space-y-8">
+        <div>
+          <label className="label">
+            <span className="label-text font-semibold uppercase tracking-wider text-xs">Customer Name (Optional)</span>
+          </label>
+          <input 
+            type="text" 
+            value={customerName} 
+            onChange={e => setCustomerName(e.target.value)} 
+            placeholder="John Doe" 
+            className="input input-bordered w-full focus:border-primary focus:ring-1 focus:ring-primary rounded-xl"
+          />
         </div>
 
         <div>
-          <label className="text-xs font-medium text-muted-foreground mb-1 block">Service</label>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto">
+           <label className="label">
+            <span className="label-text font-semibold uppercase tracking-wider text-xs">Select Service</span>
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
             {services?.map(s => (
               <button
                 key={s.id}
                 onClick={() => { setSelectedService(s); setSelectedBarber(null); setSelectedSlot(null); }}
-                className={`text-left text-xs p-2 rounded-lg border transition-all ${
+                className={`text-left p-3 rounded-xl border transition-all duration-200 group ${
                   selectedService?.id === s.id
-                    ? "border-primary bg-primary/10"
-                    : "border-border hover:border-primary/40"
+                    ? "border-primary bg-primary/10 shadow-sm shadow-primary/5"
+                    : "border-base-300 bg-base-200/50 hover:border-primary/40 hover:bg-base-200"
                 }`}
               >
-                {s.name} — {formatPrice(s.cash_price)}
+                <div className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{s.name}</div>
+                <div className={`text-xs font-bold ${selectedService?.id === s.id ? "text-primary" : "text-base-content/60"}`}>
+                  {formatPrice(s.cash_price)}
+                </div>
               </button>
             ))}
           </div>
         </div>
 
         {selectedService && (
-          <div>
-            <label className="text-xs font-medium text-muted-foreground mb-1 block">Barber</label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+             <label className="label">
+              <span className="label-text font-semibold uppercase tracking-wider text-xs">Available Barbers</span>
+            </label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {barbersList.map(b => (
                 <button
                   key={b.id}
                   onClick={() => { setSelectedBarber(b); setSelectedSlot(null); }}
-                  className={`text-left text-xs p-2 rounded-lg border transition-all ${
+                  className={`flex flex-col items-center p-4 rounded-xl border transition-all duration-200 ${
                     selectedBarber?.id === b.id
-                      ? "border-primary bg-primary/10"
-                      : "border-border hover:border-primary/40"
+                       ? "border-primary bg-primary/10 shadow-sm shadow-primary/5 scale-[1.02]"
+                      : "border-base-300 bg-base-200/50 hover:border-primary/40 hover:bg-base-200"
                   }`}
                 >
-                  {b.display_name}
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 ${selectedBarber?.id === b.id ? "bg-primary text-primary-content" : "bg-base-300 text-base-content/60"}`}>
+                    <User className="w-6 h-6" />
+                  </div>
+                  <span className="text-sm font-semibold text-center">{b.display_name}</span>
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {selectedBarber && (
-          <div>
-            <label className="text-xs font-medium text-muted-foreground mb-1 block">Date</label>
-            <Input type="date" value={selectedDate} onChange={e => { setSelectedDate(e.target.value); setSelectedSlot(null); }} />
-          </div>
-        )}
-
-        {selectedBarber && selectedDate && (
-          <div>
-            <label className="text-xs font-medium text-muted-foreground mb-1 block">Available Slots</label>
-            {!slots?.length ? (
-              <p className="text-xs text-muted-foreground py-2">No available slots</p>
-            ) : (
-              <div className="grid grid-cols-4 gap-2">
-                {slots.map(s => (
-                  <button
-                    key={s.slot_start}
-                    onClick={() => setSelectedSlot({ start: s.slot_start, end: s.slot_end })}
-                    className={`text-xs p-2 rounded-lg border transition-all ${
-                      selectedSlot?.start === s.slot_start
-                        ? "border-primary bg-primary/10"
-                        : "border-border hover:border-primary/40"
-                    }`}
-                  >
-                    {formatSlotTime(s.slot_start)}
-                  </button>
-                ))}
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col sm:flex-row gap-6">
+            <div className="flex-1">
+               <label className="label">
+                <span className="label-text font-semibold uppercase tracking-wider text-xs">Date</span>
+              </label>
+              <input 
+                type="date" 
+                value={selectedDate} 
+                onChange={e => { setSelectedDate(e.target.value); setSelectedSlot(null); }} 
+                className="input input-bordered w-full focus:border-primary focus:ring-1 focus:ring-primary rounded-xl"
+              />
+            </div>
+            
+            {selectedDate && (
+               <div className="flex-[2]">
+                 <label className="label">
+                  <span className="label-text font-semibold uppercase tracking-wider text-xs">Available Slots</span>
+                </label>
+                {!slots?.length ? (
+                  <div className="p-4 rounded-xl border border-base-300 bg-base-200/50 text-center text-sm text-base-content/60">
+                    No available slots for this date
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                    {slots.map(s => (
+                      <button
+                        key={s.slot_start}
+                        onClick={() => setSelectedSlot({ start: s.slot_start, end: s.slot_end })}
+                        className={`text-sm py-2 px-1 rounded-xl border transition-all font-medium ${
+                          selectedSlot?.start === s.slot_start
+                            ? "border-primary bg-primary text-primary-content shadow-md shadow-primary/20"
+                            : "border-base-300 bg-base-200/50 hover:border-primary/40 hover:bg-base-200 text-base-content/70 hover:text-base-content"
+                        }`}
+                      >
+                        {formatSlotTime(s.slot_start)}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
-          </div>
+          </motion.div>
         )}
       </div>
 
-      <Button
-        onClick={handleBook}
-        disabled={!selectedService || !selectedBarber || !selectedSlot || createBooking.isPending}
-        className="gold-gradient text-background font-semibold w-full"
-      >
-        {createBooking.isPending ? "Creating..." : "Create Walk-In Booking"}
-      </Button>
+      <div className="pt-6 mt-6 border-t border-base-300">
+        <Button
+          onClick={handleBook}
+          disabled={!selectedService || !selectedBarber || !selectedSlot || createBooking.isPending}
+          className="btn btn-primary btn-lg w-full rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all text-lg border-none"
+        >
+          {createBooking.isPending ? "Creating Booking..." : "Book Appointment"}
+        </Button>
+      </div>
     </div>
   );
 };
