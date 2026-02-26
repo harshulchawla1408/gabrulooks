@@ -33,33 +33,55 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="space-y-4">
-            <img src={logo} alt="Gabru Looks" className="h-20 w-auto mb-4 brightness-0 invert opacity-90 hover:opacity-100 transition-opacity" />
+            <img src={logo} alt="Gabru Looks" className="h-20 w-auto mb-4 opacity-90 hover:opacity-100 transition-opacity" />
             <p className="text-sm text-neutral-content/60 italic font-heading">Where Hair Meets The Artist</p>
             <p className="text-sm text-neutral-content/50 leading-relaxed">Premium grooming experience in Werribee, Australia. Precision cuts, expert styling, and premium care.</p>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h4 className="font-heading text-xl text-primary mb-6 flex items-center gap-2">
-              <span className="w-8 h-1 bg-primary rounded-full"></span> Quick Links
-            </h4>
-            <ul className="space-y-3">
-              {[
-                { to: "/", label: "Home" },
-                { to: "/about", label: "About Us" },
-                { to: "/services", label: "Services" },
-                { to: "/shop", label: "Shop" },
-                { to: "/gallery", label: "Gallery" },
-                { to: "/contact", label: "Contact" },
-              ].map((link) => (
-                <li key={link.to}>
-                  <Link to={link.to} className="text-sm text-neutral-content/60 hover:text-primary transition-colors flex items-center gap-2 group">
-                    <ArrowRight className="w-4 h-4 text-primary opacity-0 -ml-6 transition-all duration-300 group-hover:opacity-100 group-hover:ml-0" />
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">{link.label}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="col-span-1 md:col-span-2 lg:col-span-1 grid grid-cols-2 lg:grid-cols-1 gap-8">
+            <div>
+              <h4 className="font-heading text-xl text-primary mb-6 flex items-center gap-2">
+                <span className="w-8 h-1 bg-primary rounded-full"></span> Quick Links
+              </h4>
+              <ul className="space-y-3">
+                {[
+                  { to: "/", label: "Home" },
+                  { to: "/about", label: "About Us" },
+                  { to: "/services", label: "Services" },
+                  { to: "/shop", label: "Shop" },
+                  { to: "/gallery", label: "Gallery" },
+                  { to: "/contact", label: "Contact" },
+                ].map((link) => (
+                  <li key={link.to}>
+                    <Link to={link.to} className="text-sm text-neutral-content/60 hover:text-primary transition-colors flex items-center gap-2 group">
+                      <ArrowRight className="w-4 h-4 text-primary opacity-0 -ml-6 transition-all duration-300 group-hover:opacity-100 group-hover:ml-0" />
+                      <span className="group-hover:translate-x-1 transition-transform duration-300">{link.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-heading text-xl text-primary mb-6 flex items-center gap-2">
+                <span className="w-8 h-1 bg-primary rounded-full"></span> Legal
+              </h4>
+              <ul className="space-y-3">
+                {[
+                  { to: "/privacy-policy", label: "Privacy Policy" },
+                  { to: "/terms-and-conditions", label: "Terms & Conditions" },
+                  { to: "/refund-policy", label: "Refund Policy" },
+                  { to: "/cancellation-policy", label: "Cancellation Policy" },
+                ].map((link) => (
+                  <li key={link.to}>
+                    <Link to={link.to} className="text-sm text-neutral-content/60 hover:text-primary transition-colors flex items-center gap-2 group">
+                      <ArrowRight className="w-4 h-4 text-primary opacity-0 -ml-6 transition-all duration-300 group-hover:opacity-100 group-hover:ml-0" />
+                      <span className="group-hover:translate-x-1 transition-transform duration-300">{link.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Contact Info */}

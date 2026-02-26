@@ -26,6 +26,10 @@ import BookAppointment from "./pages/BookAppointment";
 import LoyaltyPoints from "./pages/LoyaltyPoints";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
+import RefundPolicy from "./pages/RefundPolicy";
+import CancellationPolicy from "./pages/CancellationPolicy";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +60,10 @@ const App = () => (
                     <Route path="/admin" element={<ProtectedRoute allowedRoles={["admin"]}><AdminDashboard /></ProtectedRoute>} />
                     <Route path="/barber" element={<ProtectedRoute allowedRoles={["barber"]}><BarberDashboard /></ProtectedRoute>} />
                     <Route path="/receptionist" element={<ProtectedRoute allowedRoles={["receptionist"]}><ReceptionistDashboard /></ProtectedRoute>} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/terms-and-conditions" element={<TermsConditions />} />
+                    <Route path="/refund-policy" element={<RefundPolicy />} />
+                    <Route path="/cancellation-policy" element={<CancellationPolicy />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Layout>
