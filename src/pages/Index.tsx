@@ -11,8 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
+
 import StatsCounter from "@/components/StatsCounter";
 
 import qrCode from "@/assets/gabru-qr.png";
