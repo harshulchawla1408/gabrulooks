@@ -42,6 +42,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const ensureProfileExists = async (currentUser: User) => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('user_id', currentUser.id)
+        .maybeSingle();
+      
+      if (!data && !error) {
+        // Profile doesn't exist, create it
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert({
+            user_id: currentUser.id,
+            email: currentUser.email || '',
+            full_name: currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || '',
+            avatar_url: currentUser.user_metadata?.avatar_url || currentUser.user_metadata?.picture || '',
+            provider: currentUser.app_metadata?.provider || 'unknown',
+          });
+          
+        if (insertError) {
+          console.error('Error creating profile on frontend:', insertError);
+        }
+      }
+    } catch (err) {
+      console.error('Ensure profile exists error:', err);
+    }
+  };
+
   useEffect(() => {
     let isMounted = true;
 
@@ -53,6 +82,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(session?.user ?? null);
         if (session?.user) {
           fetchRole(session.user.id);
+          ensureProfileExists(session.user);
         } else {
           setRole(null);
         }
@@ -68,6 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(session?.user ?? null);
         if (session?.user) {
           await fetchRole(session.user.id);
+          ensureProfileExists(session.user);
         }
       } finally {
         if (isMounted) setLoading(false);

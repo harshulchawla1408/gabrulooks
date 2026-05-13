@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Phone, Loader2, Apple } from "lucide-react";
+import { Phone, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -70,36 +70,6 @@ const Login = () => {
     setLoading(false);
   }
 };
-
-
-  const handleAppleSignIn = async () => {
-  setLoading(true);
-  try {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "apple",
-      options: {
-        redirectTo: window.location.origin + "/dashboard",
-      },
-    });
-
-    if (error) {
-      toast({
-        title: "Sign in failed",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  } catch {
-    toast({
-      title: "Sign in failed",
-      description: "Something went wrong",
-      variant: "destructive",
-    });
-  } finally {
-    setLoading(false);
-  }
-};
-
 
   const handleSendOtp = async () => {
     if (!phoneNumber || phoneNumber.replace(/\s/g, "").length < 8) {
@@ -170,20 +140,6 @@ const Login = () => {
                 </svg>
               )}
               Continue with Google
-            </Button>
-
-            <Button
-              onClick={handleAppleSignIn}
-              disabled={loading}
-              variant="outline"
-              className="btn btn-outline w-full rounded-xl hover:bg-base-200 hover:text-base-content hover:border-base-300 transition-all duration-300 h-12"
-            >
-              {loading ? (
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-              ) : (
-                <Apple className="w-5 h-5 mr-3" />
-              )}
-              Continue with Apple
             </Button>
           </motion.div>
 
